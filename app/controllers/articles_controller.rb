@@ -12,6 +12,10 @@ class ArticlesController < ApplicationController
         @article = Article.new
     end
 
+    def edit
+        @article = Article.find(params[:id])
+    end
+
     def create
         #render plain:  params[:article] - USE THIS TO RENDER FORM RESPONSE AS LOCAL HTML
         #render plain: @article.inspect - USE THIS TO RENDER THE ARTICLE WITH ID AND ATTRIBUTES AS AN OBJECT
@@ -21,6 +25,16 @@ class ArticlesController < ApplicationController
             redirect_to @article
         else 
             render 'new'
+        end
+    end
+
+    def update
+        @article = Article.find(params[:id])
+        if @article.update(params.require(:article).permit(:title, :description))
+            flash[:notice] = "Article was updated successfully."
+            redirect_to @article
+        else
+            render 'edit'
         end
     end
 
