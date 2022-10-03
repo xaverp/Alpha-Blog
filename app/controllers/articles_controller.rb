@@ -19,7 +19,7 @@ class ArticlesController < ApplicationController
         #render plain:  params[:article] - USE THIS TO RENDER FORM RESPONSE AS LOCAL HTML
         #render plain: @article.inspect - USE THIS TO RENDER THE ARTICLE WITH ID AND ATTRIBUTES AS AN OBJECT
         @article = Article.new(article_params)
-        @article.user = User.first
+        @article.user = current_user
         if @article.save
             flash[:notice] = "Article was created successfully."
             redirect_to @article
